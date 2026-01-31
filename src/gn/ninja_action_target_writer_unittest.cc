@@ -726,8 +726,8 @@ TEST(NinjaActionTargetWriter, ForEachWithDescription) {
   target.action_values().outputs() = SubstitutionList::MakeForTest(
       "//out/Debug/{{source_name_part}}.out");
 
-  setup.build_settings()->set_python_path(base::FilePath(FILE_PATH_LITERAL(
-      "/usr/bin/python")));
+  setup.build_settings()->SetPythonPath(
+      base::FilePath(FILE_PATH_LITERAL("/usr/bin/python")));
 
   std::ostringstream out;
   NinjaActionTargetWriter writer(&target, out);
