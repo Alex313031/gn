@@ -442,6 +442,11 @@ def WriteGNNinja(path, platform, host, options, args_list):
     else:
       cflags.append('-DNDEBUG')
       cflags.append('-O3')
+      cflags.append('-mfpmath=sse')
+      cflags.append('-msse2')
+      cflags.append('-msse3')
+      cflags.append('-ffast-math')
+      cflags.append('-ffp-contract=fast')
       if options.no_strip:
         cflags.append('-g')
       ldflags.append('-O3')
@@ -558,11 +563,14 @@ def WriteGNNinja(path, platform, host, options, args_list):
       cflags.extend(['-DUNICODE',
                      '-DNOMINMAX',
                      '-DWIN32_LEAN_AND_MEAN',
-                     '-DWINVER=0x0A00',
+                     '-DWINVER=0x0601',
+                     '-D_WIN32_WINNT=0x0601',
+                     #'-D_USING_V110_SDK71_',
+                     #'-D_ATL_XP_TARGETING',
+                     '-DPSAPI_VERSION=1',
                      '-D_CRT_SECURE_NO_DEPRECATE',
                      '-D_SCL_SECURE_NO_DEPRECATE',
                      '-D_UNICODE',
-                     '-D_WIN32_WINNT=0x0A00',
                      '-D_HAS_EXCEPTIONS=0'
       ])
   elif platform.is_msvc():
@@ -944,6 +952,7 @@ def WriteGNNinja(path, platform, host, options, args_list):
           'dbghelp.lib',
           'kernel32.lib',
           'ole32.lib',
+          'psapi.lib',
           'shell32.lib',
           'user32.lib',
           'userenv.lib',
@@ -957,6 +966,7 @@ def WriteGNNinja(path, platform, host, options, args_list):
           '-ladvapi32',
           '-ldbghelp',
           '-lkernel32',
+          '-lpsapi',
           '-lole32',
           '-lshell32',
           '-luser32',

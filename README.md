@@ -1,9 +1,8 @@
 # GN
 
-[![Build Status](https://travis-ci.com/timniederhausen/gn.svg?branch=master)](https://travis-ci.com/timniederhausen/gn)
-[![Build status](https://ci.appveyor.com/api/projects/status/h6csk52w7dr73tgn/branch/master?svg=true)](https://ci.appveyor.com/project/timniederhausen/gn/branch/master)
+__NOTE:__ This is a fork with compiler optimizations like -O3 -ffast-math and SSE4, and support for Windows XP/Vista was re-added.
 
-GN is a meta-build system that generates build files for
+GN ("Generate Ninja") is a meta-build system that generates build files for
 [Ninja](https://ninja-build.org).
 
 Related resources:
