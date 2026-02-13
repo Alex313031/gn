@@ -524,6 +524,7 @@ def WriteGNNinja(path, platform, host, options, args_list):
 
       if not options.no_static_libstdcpp:
         ldflags.append('-static-libstdc++')
+        ldflags.append('-static')
 
       cflags.extend([
         '-Wno-deprecated-copy',
