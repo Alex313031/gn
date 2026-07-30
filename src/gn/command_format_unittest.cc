@@ -14,6 +14,24 @@
 
 using FormatTest = TestWithScheduler;
 
+namespace {
+
+// The test binary may sit at any depth below the source root (out/,
+// out/linux/, ...), so walk upward from the exe until the test data appears.
+base::FilePath FindSourceRoot() {
+  base::FilePath dir = GetExePath().DirName();
+  for (int i = 0; i < 10; ++i) {
+    if (base::DirectoryExists(dir.Append(FILE_PATH_LITERAL("src"))
+                                  .Append(FILE_PATH_LITERAL("gn"))
+                                  .Append(FILE_PATH_LITERAL("format_test_data"))))
+      return dir;
+    dir = dir.Append(FILE_PATH_LITERAL(".."));
+  }
+  return dir;
+}
+
+}  // namespace
+
 #define FORMAT_TEST(n) FORMAT_TEST_WITH_WIDTH(n, commands::kDefaultFormatWidth)
 
 #define FORMAT_TEST_WITH_WIDTH(n, format_width)                                \
@@ -22,8 +40,7 @@ using FormatTest = TestWithScheduler;
     std::string input;                                                         \
     std::string out;                                                           \
     std::string expected;                                                      \
-    base::FilePath src_dir =                                                   \
-        GetExePath().DirName().Append(FILE_PATH_LITERAL(".."));                \
+    base::FilePath src_dir = FindSourceRoot();                                 \
     base::SetCurrentDirectory(src_dir);                                        \
     ASSERT_TRUE(base::ReadFileToString(                                        \
         base::FilePath(FILE_PATH_LITERAL("src/gn/format_test_data/")           \
